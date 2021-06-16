@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
   libproj-dev
 
 # install R packages required 
-dataRetrieval extrafont ggrepel ggsn leaflet mapview patchwork potly reactable rnoaa RODBC sf RCurl
 RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('flexdashboard', repos='http://cran.rstudio.com/')"
