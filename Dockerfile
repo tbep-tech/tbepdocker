@@ -17,26 +17,20 @@ RUN apt-get update && apt-get install -y \
   libproj-dev
 
 # install R packages required 
-RUN R -e "install.packages('dataRetrieval', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('extrafont', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggrepel', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggsn', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('leaflet', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('mapview', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('patchwork', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('plotly', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('reactable', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('rnoaa', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('RODBC', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('sf', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('RCurl', repos = 'http://cran.rstudio.com/')"
-RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org))"
+dataRetrieval extrafont ggrepel ggsn leaflet mapview patchwork potly reactable rnoaa RODBC sf RCurl
+RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('flexdashboard', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('mapview', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('leaflet', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyverse', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('sf', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('plotly', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('leafem', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('RColorBrewer', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('scales', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('reactable', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('patchwork', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shinyWidgets', repos='http://cran.rstudio.com/')"
 
 # select port
