@@ -10,22 +10,27 @@ RUN apt-get update && apt-get install -y \
   libcairo2-dev \
   libxt-dev \
   libssl-dev \
-  libssh2-1-dev 
-
+  libssh2-1-dev \
+  libudunits2-dev \
+  libgdal-dev \
+  libgeos-dev \
+  libproj-dev
 
 # install R packages required 
-RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
-RUN R -e "remotes::install_github('tbep-tech/wqtrends', upgrade = 'never')"
+RUN R -e "install.packages('tbeptools', repos = 'https://fawda123.r-universe.dev')"
 RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('rmarkdown', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('flexdashboard', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('mapview', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('leaflet', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyverse', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('lubridate', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggmap', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinyWidgets', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('mgcv', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('sf', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('plotly', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('gridExtra', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinycssloaders', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('leafem', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('RColorBrewer', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('scales', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('reactable', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('patchwork', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('shinyWidgets', repos='http://cran.rstudio.com/')"
 
 # select port
 EXPOSE 3838
