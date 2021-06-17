@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
 
 # install R packages required 
 RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
+RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('flexdashboard', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('mapview', repos='http://cran.rstudio.com/')"
@@ -31,6 +32,16 @@ RUN R -e "install.packages('scales', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('reactable', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('patchwork', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shinyWidgets', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('shinydashboard', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('extrafont', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('networkD3', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('foreign', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('here', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('mapedit', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('leaflet.extras', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('units', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('shinycssloaders', repos='http://cran.rstudio.com/')"
+RUN R -e "remotes::install_github('trestletech/ShinyDash')"
 
 # select port
 EXPOSE 3838
