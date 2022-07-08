@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
   sudo \
   pandoc \
   pandoc-citeproc \
+  yad \
+  libc6-dev \
   libcurl4-gnutls-dev \
   libcairo2-dev \
   libxt-dev \
@@ -14,11 +16,12 @@ RUN apt-get update && apt-get install -y \
   libudunits2-dev \
   libgdal-dev \
   libgeos-dev \
-  libproj-dev
+  libproj-dev \
+  libfontconfig1-dev \
+  libblas-dev
 
 # install R packages required 
 RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
-RUN R -e "remotes::install_github('trestletech/ShinyDash')"
 RUN R -e "install.packages('data.table', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('dplyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('extrafont', repos='http://cran.rstudio.com/')"
@@ -52,6 +55,7 @@ RUN R -e "install.packages('plyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('RColorBrewer', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('reactable', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('reactablefmtr', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('rgdal', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('rhandsontable', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('rstudioapi', repos='http://cran.rstudio.com/')"
@@ -69,6 +73,7 @@ RUN R -e "install.packages('svDialogs', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyverse', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('units', repos='http://cran.rstudio.com/')"
+RUN R -e "remotes::install_github('trestletech/ShinyDash')"
 
 # select port
 EXPOSE 3838

@@ -61,6 +61,7 @@ flsexc <- c(
   'https://raw.githubusercontent.com/tbep-tech/wq-dash/master/wq-dash.Rmd',
   'https://raw.githubusercontent.com/tbep-tech/nekton-dash/master/nekton-dash.Rmd',
   'https://raw.githubusercontent.com/tbep-tech/tbepRSparrow-control/master/app.R',
+  # 'https://raw.githubusercontent.com/tbep-tech/seagrasstransect/master/otbseagrass.Rmd',
   'https://raw.githubusercontent.com/tbep-tech/sso-dash/master/future-risk.Rmd'
   )
 excpkgs <- purrr::map(flsexc, scrplib)
