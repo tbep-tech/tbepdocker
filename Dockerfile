@@ -1,4 +1,4 @@
-# get shiny serves plus tidyverse packages image
+# get shiny server plus tidyverse packages image
 FROM rocker/shiny-verse:latest
 
 # system libraries of general use
@@ -22,14 +22,12 @@ RUN apt-get update && apt-get install -y \
 
 # install R packages required 
 RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
+RUN R -e "install.packages('WtRegDO', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "install.packages('data.table', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('dplyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('extrafont', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('flexdashboard', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('forcats', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('foreign', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('gear', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggplot2', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('ggridges', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('gplots', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('here', repos='http://cran.rstudio.com/')"
@@ -40,8 +38,6 @@ RUN R -e "install.packages('knitr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('leafem', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('leaflet', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('leaflet.extras', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('lubridate', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('magrittr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('mapedit', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('maptools', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('mapview', repos='http://cran.rstudio.com/')"
@@ -68,10 +64,9 @@ RUN R -e "install.packages('shinyjs', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shinyWidgets', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('sp', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('spdep ', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('stargazer', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('stringr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('svDialogs', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('tidyr', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('tidyverse', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('units', repos='http://cran.rstudio.com/')"
 RUN R -e "remotes::install_github('trestletech/ShinyDash')"
 
