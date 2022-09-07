@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
 # install R packages required 
 RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "install.packages('WtRegDO', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
+RUN R -e "install.packages('box', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('car', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('data.table', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('data.tree', repos='http://cran.rstudio.com/')"
