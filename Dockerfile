@@ -29,7 +29,6 @@ RUN R -e "install.packages('data.table', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('data.tree', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('extrafont', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('EnvStats', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('flexdashboard', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('foreign', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('formatR', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('gear', repos='http://cran.rstudio.com/')"
@@ -80,6 +79,7 @@ RUN R -e "install.packages('stringr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('svDialogs', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('units', repos='http://cran.rstudio.com/')"
 RUN R -e "remotes::install_github('trestletech/ShinyDash')"
+RUN R -e "remotes::install_version('flexdashboard', '0.5.2')"
 
 # select port
 EXPOSE 3838
