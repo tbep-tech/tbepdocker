@@ -5,7 +5,6 @@ FROM rocker/shiny-verse:latest
 RUN apt-get update && apt-get install -y \
   sudo \
   pandoc \
-  pandoc-citeproc \
   yad \
   libc6-dev \
   libcurl4-gnutls-dev \
