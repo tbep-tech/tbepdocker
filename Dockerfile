@@ -4,6 +4,9 @@ FROM rocker/geospatial:latest
 # install shiny server
 RUN /rocker_scripts/install_shiny_server.sh
 
+# install RStudio Server
+RUN /rocker_scripts/install_rstudio.sh
+
 # get system dependencies
 RUN apt-get update && apt-get install -y \
   git \
@@ -20,8 +23,8 @@ RUN install2.r --error --repos 'http://cran.rstudio.com/' \
    leaflet leaflet.extras leaflet.extras2 leafpop leafsync librarian lubridate mapedit mapview \
    markdown multcompView networkD3 nlmrt numDeriv OpenMx patchwork plotly plyr purrr RColorBrewer \
    reactable reactablefmtr readr remotes rhandsontable rstan rstudioapi scales sf shiny \
-   shinycssloaders shinydashboard shinyjs shinyWidgets sp spdep stargazer stringr svDialogs \
-   terra tibble tidyr units webshot2
+   shinycssloaders shinydashboard shinyjs shinyWidgets slider sp spdep stargazer StormR stringr svDialogs \
+   terra thematic tibble tidyr units webshot2
    
 # install specific version of package
 RUN R -e "remotes::install_version('flexdashboard', '0.5.2')"
@@ -31,16 +34,32 @@ RUN installGithub.r fawda123/WtRegDO
 RUN installGithub.r tbep-tech/extractr # original from marinebon/extractr, our version includes a fix
 RUN installGithub.r tbep-tech/tbeptools
 
-# select port
-EXPOSE 3838
+# select ports (3838 for Shiny, 8787 for RStudio)
+EXPOSE 3838 8787
 
 # create directory and set permissions
 RUN mkdir -p /var/lib/shiny-server/ \
     /var/log \
     && chown -R shiny:shiny /var/lib/shiny-server/ \
     && chown -R shiny:shiny /var/log
+
+# Modify the RStudio user section to only set password and add to sudo
+RUN useradd -m tbepuser && \
+    echo "tbepuser:tbeppassword" | chpasswd && \
+    adduser tbepuser sudo
     
+# Copy and set up starter script
 COPY shiny-server.sh /usr/bin/shiny-server.sh
 RUN ["chmod", "+x", "/usr/bin/shiny-server.sh"]
 
-CMD ["/usr/bin/shiny-server.sh"]
+# Create a new startup script that launches both Shiny and RStudio
+RUN echo '#!/bin/bash\n\
+service rstudio-server start\n\
+exec /usr/bin/shiny-server.sh\n\
+' > /usr/bin/start-services.sh && \
+chmod +x /usr/bin/start-services.sh
+
+# Add cron job for data updates
+RUN echo "0 0 * * * /usr/bin/Rscript /srv/shiny-server/apps/climate-dash/server/update_data.R >> /share/log/climate_data_update.log 2>&1" | crontab -
+
+CMD ["/usr/bin/start-services.sh"]
