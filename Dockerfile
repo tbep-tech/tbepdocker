@@ -1,95 +1,45 @@
-# get shiny server plus tidyverse packages image
-FROM rocker/shiny-verse:latest
+# get rocker geospatial image
+FROM rocker/geospatial:latest
 
-# system libraries of general use
+# install shiny server
+RUN /rocker_scripts/install_shiny_server.sh
+
+# get system dependencies
 RUN apt-get update && apt-get install -y \
+  git \
+  cron \
   sudo \
-  pandoc \
   yad \
-  libc6-dev \
-  libcurl4-gnutls-dev \
-  libcairo2-dev \
-  libxt-dev \
-  libssl-dev \
-  libssh2-1-dev \
-  libudunits2-dev \
-  libgdal-dev \
-  libgeos-dev \
-  libproj-dev \
-  libfontconfig1-dev \
-  libblas-dev
+  libgit2-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-# install R packages required 
-RUN R -e "install.packages('tbeptools', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
-RUN R -e "install.packages('WtRegDO', repos = c('https://fawda123.r-universe.dev', 'https://cloud.r-project.org'))"
-RUN R -e "install.packages('box', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('bslib', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('car', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('data.table', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('data.tree', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('extrafont', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('EnvStats', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('foreign', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('formatR', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('gear', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('geosphere', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggridges', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggmap', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('gplots', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('here', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('htmltools', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('htmlwidgets', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('inline', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('kableExtra', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('knitr', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('leafem', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('leaflet', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('leaflet.extras', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('leafpop', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('leafsync', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('librarian', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('mapedit', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('maptools', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('mapview', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('markdown', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('multcompView', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('networkD3', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('nlmrt', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('numDeriv', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('OpenMx', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('patchwork', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('plotly', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('plyr', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('RColorBrewer', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('reactable', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('reactablefmtr', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('rgdal', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('rhandsontable', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('rstan', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('rstudioapi', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('scales', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('sf', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinycssloaders', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinydashboard', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinyjs', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinyWidgets', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('sp', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('spdep', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('stargazer', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('stringr', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('svDialogs', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('units', repos='http://cran.rstudio.com/')"
-RUN R -e "remotes::install_github('trestletech/ShinyDash')"
+# install standard CRAN packages
+RUN install2.r --error --repos 'http://cran.rstudio.com/' \
+   box bsicons bslib car curl data.table data.tree dplyr EnvStats extrafont foreign formatR gear gert \
+   geosphere ggmap ggplot2 ggridges glue gplots here htmltools htmlwidgets inline kableExtra knitr leafem \
+   leaflet leaflet.extras leaflet.extras2 leafpop leafsync librarian lubridate mapedit mapview \
+   markdown multcompView networkD3 nlmrt numDeriv OpenMx patchwork plotly plyr purrr RColorBrewer \
+   reactable reactablefmtr readr remotes rhandsontable rstan rstudioapi scales sf shiny \
+   shinycssloaders shinydashboard shinyjs shinyWidgets sp spdep stargazer stringr svDialogs \
+   terra tibble tidyr units webshot2
+   
+# install specific version of package
 RUN R -e "remotes::install_version('flexdashboard', '0.5.2')"
+
+# install github packages
+RUN installGithub.r fawda123/WtRegDO
+RUN installGithub.r tbep-tech/extractr # original from marinebon/extractr, our version includes a fix
+RUN installGithub.r tbep-tech/tbeptools
 
 # select port
 EXPOSE 3838
 
-# allow permission
-RUN chown shiny:shiny /var/lib/shiny-server/
-
+# create directory and set permissions
+RUN mkdir -p /var/lib/shiny-server/ \
+    /var/log \
+    && chown -R shiny:shiny /var/lib/shiny-server/ \
+    && chown -R shiny:shiny /var/log
+    
 COPY shiny-server.sh /usr/bin/shiny-server.sh
 RUN ["chmod", "+x", "/usr/bin/shiny-server.sh"]
 
