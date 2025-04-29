@@ -1,6 +1,10 @@
 # get rocker geospatial image
 FROM rocker/geospatial:latest
 
+# Install environment variable defaults (overridden by docker-compose or docker run)
+ENV RSTUDIO_USER=rstudio
+ENV RSTUDIO_PASSWORD=changeme
+
 # install shiny server
 RUN /rocker_scripts/install_shiny_server.sh
 
@@ -43,23 +47,24 @@ RUN mkdir -p /var/lib/shiny-server/ \
     && chown -R shiny:shiny /var/lib/shiny-server/ \
     && chown -R shiny:shiny /var/log
 
-# Modify the RStudio user section to only set password and add to sudo
-RUN useradd -m tbepuser && \
-    echo "tbepuser:tbeppassword" | chpasswd && \
-    adduser tbepuser sudo
-    
 # Copy and set up starter script
 COPY shiny-server.sh /usr/bin/shiny-server.sh
 RUN ["chmod", "+x", "/usr/bin/shiny-server.sh"]
 
-# Create a new startup script that launches both Shiny and RStudio
+# Create a new startup script that creates user and launches both services
 RUN echo '#!/bin/bash\n\
+# Create user with provided environment variables\n\
+useradd -m ${RSTUDIO_USER}\n\
+echo "${RSTUDIO_USER}:${RSTUDIO_PASSWORD}" | chpasswd\n\
+adduser ${RSTUDIO_USER} sudo\n\
+\n\
+# Start services\n\
 service rstudio-server start\n\
 exec /usr/bin/shiny-server.sh\n\
 ' > /usr/bin/start-services.sh && \
 chmod +x /usr/bin/start-services.sh
 
 # Add cron job for data updates
-RUN echo "0 0 * * * /usr/bin/Rscript /srv/shiny-server/apps/climate-dash/server/update_data.R >> /share/log/climate_data_update.log 2>&1" | crontab -
+RUN echo "*/15 * * * * /srv/shiny-server/apps/climate-dash/server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1" | crontab -
 
 CMD ["/usr/bin/start-services.sh"]
