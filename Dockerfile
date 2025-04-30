@@ -59,12 +59,13 @@ echo "${RSTUDIO_USER}:${RSTUDIO_PASSWORD}" | chpasswd\n\
 adduser ${RSTUDIO_USER} sudo\n\
 \n\
 # Start services\n\
+service cron start\n\
 service rstudio-server start\n\
 exec /usr/bin/shiny-server.sh\n\
 ' > /usr/bin/start-services.sh && \
 chmod +x /usr/bin/start-services.sh
 
-# Add cron job for data updates
-RUN echo "*/15 * * * * /srv/shiny-server/apps/climate-dash/server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1" | crontab -
+# Add cron job for data updates, daily at midnight
+RUN echo "0 0 * * * /usr/local/bin/Rscript /srv/shiny-server/apps/climate-dash/server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1" | crontab -
 
 CMD ["/usr/bin/start-services.sh"]
