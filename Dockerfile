@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
   sudo \
   yad \
   libgit2-dev \
+  nano \
   && rm -rf /var/lib/apt/lists/*
 
 # install standard CRAN packages
