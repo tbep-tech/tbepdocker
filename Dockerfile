@@ -60,6 +60,9 @@ useradd -m ${RSTUDIO_USER}\n\
 echo "${RSTUDIO_USER}:${RSTUDIO_PASSWORD}" | chpasswd\n\
 adduser ${RSTUDIO_USER} sudo\n\
 \n\
+# Fix permissions for mounted Shiny apps\n\
+chown -R shiny:shiny /srv/shiny-server/\n\
+\n\
 # Start services\n\
 service cron start\n\
 service rstudio-server start\n\
