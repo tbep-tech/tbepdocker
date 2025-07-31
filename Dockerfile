@@ -71,6 +71,6 @@ exec /usr/bin/shiny-server.sh\n\
 chmod +x /usr/bin/start-services.sh
 
 # Add cron job for data updates, daily at midnight
-RUN echo "0 0 * * * cd /srv/shiny-server/apps/climate-dash; /usr/local/bin/Rscript ./server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1" | crontab -
+RUN echo "0 0 * * * cd /srv/shiny-server/climate-dash; /usr/local/bin/Rscript ./server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1" | crontab -
 
 CMD ["/usr/bin/start-services.sh"]
