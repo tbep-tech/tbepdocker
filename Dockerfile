@@ -24,9 +24,9 @@ RUN apt-get update && apt-get install -y \
 # install standard CRAN packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
    box bsicons bslib car curl data.table data.tree dplyr EnvStats extrafont foreign formatR gear gert \
-   geosphere ggmap ggplot2 ggridges glue gplots here htmltools htmlwidgets inline kableExtra knitr leafem \
-   leaflet leaflet.extras leaflet.extras2 leafpop leafsync librarian lubridate mapedit mapview \
-   markdown multcompView networkD3 nlmrt numDeriv OpenMx patchwork plotly plyr purrr RColorBrewer \
+   geosphere ggmap ggplot2 ggridges glue gplots here highcharter htmltools htmlwidgets inline kableExtra 
+   knitr leafem leaflet leaflet.extras leaflet.extras2 leafpop leafsync librarian lubridate mapedit 
+   mapview markdown multcompView networkD3 nlmrt numDeriv OpenMx patchwork plotly plyr purrr RColorBrewer \
    reactable reactablefmtr readr remotes rhandsontable rstan rstudioapi scales sf shiny \
    shinycssloaders shinydashboard shinyjs shinyWidgets slider sp spdep stargazer StormR stringr svDialogs \
    terra thematic tibble tidyr units webshot2
