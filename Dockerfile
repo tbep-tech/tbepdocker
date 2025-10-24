@@ -35,10 +35,11 @@ RUN install2.r --error --repos 'http://cran.rstudio.com/' \
 RUN R -e "remotes::install_version('flexdashboard', '0.5.2')"
 
 # install github packages
-RUN installGithub.r fawda123/WtRegDO
-RUN installGithub.r marinebon/extractr # try tbep-tech/extractr if this doesn't work, our version includes a fix
-RUN installGithub.r tbep-tech/tbeptools
-RUN installGithub.r tbep-tech/slrcsap
+RUN installGithub.r \
+    fawda123/WtRegDO \
+    marinebon/extractr \ # try tbep-tech/extractr if this doesn't work, our version includes a fix
+    tbep-tech/tbeptools \
+    tbep-tech/slrcsap
 
 # select ports (3838 for Shiny, 8787 for RStudio)
 EXPOSE 3838 8787
