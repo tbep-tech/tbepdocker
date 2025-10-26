@@ -37,7 +37,7 @@ RUN R -e "remotes::install_version('flexdashboard', '0.5.2')"
 # install github packages
 RUN installGithub.r \
     fawda123/WtRegDO \
-    marinebon/extractr \ # try tbep-tech/extractr if this doesn't work, our version includes a fix
+    marinebon/extractr \
     tbep-tech/tbeptools \
     tbep-tech/slrcsap
 
