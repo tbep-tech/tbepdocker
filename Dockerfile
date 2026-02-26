@@ -65,7 +65,7 @@ adduser ${RSTUDIO_USER} sudo\n\
 chown -R shiny:shiny /srv/shiny-server/\n\
 \n\
 # Persist env vars for cron jobs (cron does not inherit Docker env)\n\
-printenv | grep -E "^(GITHUB_PAT|GIT_USER|GIT_EMAIL)=" > /root/.cron_env\n\
+printenv | grep -E "^(GITHUB_PAT|GITHUB_USERNAME|GIT_USER|GIT_EMAIL)=" > /root/.cron_env\n\
 chmod 600 /root/.cron_env\n\
 \n\
 # Start services\n\
