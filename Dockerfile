@@ -64,6 +64,10 @@ adduser ${RSTUDIO_USER} sudo\n\
 # Fix permissions for mounted Shiny apps\n\
 chown -R shiny:shiny /srv/shiny-server/\n\
 \n\
+# Persist env vars for cron jobs (cron does not inherit Docker env)\n\
+printenv | grep -E "^(GITHUB_PAT|GIT_USER|GIT_EMAIL)=" > /root/.cron_env\n\
+chmod 600 /root/.cron_env\n\
+\n\
 # Start services\n\
 service cron start\n\
 service rstudio-server start\n\
@@ -72,6 +76,6 @@ exec /usr/bin/shiny-server.sh\n\
 chmod +x /usr/bin/start-services.sh
 
 # Add cron job for data updates, daily at midnight
-RUN echo "0 0 * * * cd /srv/shiny-server/climate-dash; /usr/local/bin/Rscript ./server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1" | crontab -
+RUN printf '0 0 * * * cd /srv/shiny-server/climate-dash; /usr/local/bin/Rscript ./server/update_data.R >> /var/log/shiny-server/climate_data_update.log 2>&1\n0 1 * * 1 . /root/.cron_env; cd /srv/shiny-server/climate-dash; /usr/local/bin/Rscript ./server/git_push.R >> /var/log/shiny-server/climate_git_push.log 2>&1\n' | crontab -
 
 CMD ["/usr/bin/start-services.sh"]
