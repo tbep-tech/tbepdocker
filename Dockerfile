@@ -21,15 +21,33 @@ RUN apt-get update && apt-get install -y \
   nano \
   && rm -rf /var/lib/apt/lists/*
 
-# install standard CRAN packages
+# install core data/utility packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
-   box bsicons bslib car curl data.table data.tree dplyr EnvStats extrafont foreign formatR gear gert \
-   geosphere ggmap ggplot2 ggridges glue gplots here highcharter htmltools htmlwidgets inline kableExtra \
-   knitr leafem leaflet leaflet.extras leaflet.extras2 leafpop leafsync librarian lubridate mapedit \
-   mapview markdown multcompView networkD3 nlmrt numDeriv OpenMx patchwork plotly plyr purrr RColorBrewer \
-   reactable reactablefmtr readr remotes rhandsontable rstan rstudioapi scales sf shiny \
-   shinycssloaders shinydashboard shinyjs shinyWidgets slider sp spdep stargazer StormR stringr svDialogs \
-   terra thematic tibble tidyr units webshot2
+   box bsicons bslib car curl data.table data.tree dplyr EnvStats extrafont foreign formatR gert \
+   glue here inline kableExtra knitr librarian lubridate markdown patchwork plyr purrr RColorBrewer \
+   readr remotes rstudioapi scales stringr tibble tidyr
+
+# install spatial/mapping packages
+RUN install2.r --error --repos 'http://cran.rstudio.com/' \
+   geosphere ggmap ggplot2 ggridges gplots highcharter htmltools htmlwidgets \
+   leafem leaflet leaflet.extras leaflet.extras2 leafpop leafsync mapedit \
+   mapview plotly sf sp spdep terra units
+
+# install stats/modelling packages (rstan kept here so CRAN resolves its dependencies)
+RUN install2.r --error --repos 'http://cran.rstudio.com/' \
+   multcompView networkD3 nlmrt numDeriv OpenMx rstan slider stargazer StormR svDialogs
+
+# install shiny/UI packages
+RUN install2.r --error --repos 'http://cran.rstudio.com/' \
+   reactable rhandsontable shiny shinycssloaders shinydashboard shinyjs shinyWidgets \
+   thematic webshot2
+
+# reactablefmtr removed from CRAN; install from archive
+RUN R -e "remotes::install_version('reactablefmtr', version='2.0.0', repos='http://cran.rstudio.com/')"
+
+# install gear separately (verify CRAN availability)
+RUN install2.r --error --repos 'http://cran.rstudio.com/' \
+   gear
    
 # install specific version of package
 RUN R -e "remotes::install_version('flexdashboard', '0.5.2')"
