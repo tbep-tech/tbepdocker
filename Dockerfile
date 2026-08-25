@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
   sudo \
   yad \
   libgit2-dev \
+  libmariadb-dev \
   nano \
   && rm -rf /var/lib/apt/lists/*
 
@@ -58,7 +59,11 @@ RUN installGithub.r \
     marinebon/extractr \
     tbep-tech/tbeptools \
     tbep-tech/slrcsap
-
+    
+# install seagrass transect entry portal packages
+RUN install2.r --error --repos 'http://cran.rstudio.com/' \
+   DT pool RMariaDB shinymanager
+   
 # select ports (3838 for Shiny, 8787 for RStudio)
 EXPOSE 3838 8787
 
