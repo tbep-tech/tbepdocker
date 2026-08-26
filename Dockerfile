@@ -1,5 +1,5 @@
 # get rocker geospatial image
-FROM rocker/geospatial:latest
+FROM rocker/geospatial:4.4.2
 
 # Install environment variable defaults (overridden by docker-compose or docker run)
 ENV RSTUDIO_USER=rstudio
@@ -93,7 +93,7 @@ chmod 600 /root/.cron_env\n\
 \n\
 # Start services\n\
 service cron start\n\
-service rstudio-server start\n\
+/usr/lib/rstudio-server/bin/rserver --server-daemonize=1\n\
 exec /usr/bin/shiny-server.sh\n\
 ' > /usr/bin/start-services.sh && \
 chmod +x /usr/bin/start-services.sh
