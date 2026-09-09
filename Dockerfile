@@ -18,9 +18,11 @@ RUN apt-get update && apt-get install -y \
   sudo \
   yad \
   libgit2-dev \
-  libmariadb-dev \
   nano \
   && rm -rf /var/lib/apt/lists/*
+
+# pin Deriv version
+RUN R -e "remotes::install_version('Deriv', version='4.2.0', repos='http://cran.rstudio.com/')"
 
 # install core data/utility packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
@@ -60,6 +62,11 @@ RUN installGithub.r \
     tbep-tech/tbeptools \
     tbep-tech/slrcsap
     
+# libmariadb-dev for RMariaDB, must be installed in this order
+RUN apt-get update && apt-get install -y \
+  libmariadb-dev \
+  && rm -rf /var/lib/apt/lists/*
+
 # install seagrass transect entry portal packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
    DT pool RMariaDB shinymanager
