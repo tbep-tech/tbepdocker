@@ -30,7 +30,7 @@ RUN install2.r --error --repos 'http://cran.rstudio.com/' \
 
 # install spatial/mapping packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
-   geosphere ggmap ggplot2 ggridges gplots highcharter htmltools htmlwidgets \
+   geosphere ggalluvial ggmap ggplot2 ggridges gplots highcharter htmltools htmlwidgets \
    leafem leaflet leaflet.extras leaflet.extras2 leafpop leafsync mapedit \
    mapview plotly sf sp spdep terra units
 
