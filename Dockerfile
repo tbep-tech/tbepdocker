@@ -1,5 +1,5 @@
 # get rocker geospatial image
-FROM rocker/geospatial:4.4.2
+FROM rocker/geospatial:4.6.1
 
 # Install environment variable defaults (overridden by docker-compose or docker run)
 ENV RSTUDIO_USER=rstudio
@@ -19,16 +19,17 @@ RUN apt-get update && apt-get install -y \
   yad \
   libgit2-dev \
   nano \
+  cmake \
   && rm -rf /var/lib/apt/lists/*
-
-# pin Deriv version
-RUN R -e "remotes::install_version('Deriv', version='4.2.0', repos='http://cran.rstudio.com/')"
 
 # install core data/utility packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
    box bsicons bslib car curl data.table data.tree dplyr EnvStats extrafont foreign formatR gert \
    glue here inline kableExtra knitr librarian lubridate markdown patchwork plyr purrr RColorBrewer \
    readr remotes rstudioapi scales stringr tibble tidyr
+
+# pin Deriv version
+RUN R -e "remotes::install_version('Deriv', version='4.2.0', repos='http://cran.rstudio.com/')"
 
 # install spatial/mapping packages
 RUN install2.r --error --repos 'http://cran.rstudio.com/' \
