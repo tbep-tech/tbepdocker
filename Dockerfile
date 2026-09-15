@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
   libgit2-dev \
   nano \
   cmake \
+  curl \
   && rm -rf /var/lib/apt/lists/*
 
 # install core data/utility packages
